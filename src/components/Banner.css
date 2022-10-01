@@ -1,0 +1,23 @@
+.banner {
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+  background-color: lightgreen;
+  padding: 10px 25px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.banner-name {
+  font-weight: 500;
+  font-size: 20px;
+  margin-top: 3px;
+}
+
+.banner-avatar {
+  border: 1px solid #959090;
+  border-radius: 50%;
+  padding: 1px;
+  width: 30px;
+  height: 30px;
+}
