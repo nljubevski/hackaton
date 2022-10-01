@@ -17,7 +17,9 @@ const Home = () => {
   const navigate = useNavigate();
 
   const navigateToList = () => {
-    navigate("/list");
+    setTimeout(() => {
+      navigate("/list");
+    }, 500);
   };
 
   return (
