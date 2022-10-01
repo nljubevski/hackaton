@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Ripples from "react-ripples";
 import { useNavigate } from "react-router-dom";
 import { useStoreActions } from "easy-peasy";
 
-import { getImageUrl } from "../utils";
+import { getImageUrl, getReloadDataUrl } from "../utils";
 
 import Spinner from "./Spinner";
 import OutcomeIcon from "./OutcomeIcon";
@@ -50,13 +51,30 @@ const ImageListItem = ({ data }) => {
   const setCurrentItem = useStoreActions(
     (actions) => actions.tasks.setCurrentItem
   );
+  const [currentData, setCurrentData] = useState(data);
   const navigate = useNavigate();
-  const imageSrc = getImageUrl(data);
-  const stillProcessing = data.outcome === null;
+  const imageSrc = getImageUrl(currentData);
+  const stillProcessing = currentData.outcome === null;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (currentData.outcome === null || currentData.outcome === undefined) {
+        const fetchData = async () => {
+          const data = await fetch(getReloadDataUrl(currentData));
+          const json = await data.json();
+          setCurrentData(json);
+        };
+        fetchData().catch(console.error);
+      } else {
+        clearInterval(interval);
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [currentData]);
 
   const goToDetails = () => {
     setTimeout(() => {
-      setCurrentItem(data);
+      setCurrentItem(currentData);
       if (!stillProcessing) {
         navigate("/details");
       }
@@ -80,7 +98,7 @@ const ImageListItem = ({ data }) => {
 
           <Footer>
             {stillProcessing && <Spinner />}
-            {!stillProcessing && <OutcomeIcon success={data.outcome} />}
+            {!stillProcessing && <OutcomeIcon success={currentData.outcome} />}
           </Footer>
         </Wrapper>
       </OuterWrapper>

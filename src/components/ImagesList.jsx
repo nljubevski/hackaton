@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { map } from "lodash";
 import ImageListItem from "./ImageListItem";
+import { getListDataFileUrl } from "../utils";
 
 const OuterWrapper = styled.div`
   height: 100%;
@@ -19,7 +20,7 @@ const ImagesList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch("http://localhost:3000/list");
+      const data = await fetch(getListDataFileUrl());
       const json = await data.json();
       setList(json);
     };

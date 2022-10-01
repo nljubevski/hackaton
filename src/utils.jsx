@@ -1,11 +1,21 @@
-const BASE_URL = "http://localhost:3000/";
-const imageUrl = `${BASE_URL}/data/`;
-const statusUrl = `${BASE_URL}/statusIcons/`;
+const BASE_URL = "http://localhost:3000";
 
 export const getImageUrl = (data) => {
-  return imageUrl + data.dir + "/" + data.imageName;
+  return `${BASE_URL}/data/${data.dir}/${data.imageName}`;
 };
 
 export const getStausUrl = (data) => {
-  return statusUrl + data.statusIcon;
+  return `${BASE_URL}/statusIcons/${data.statusIcon}`;
+};
+
+export const getReloadDataUrl = (data) => {
+  return `${BASE_URL}/status/${data.dir}`;
+};
+
+export const getUploadFileUrl = () => {
+  return `${BASE_URL}/upload`;
+};
+
+export const getListDataFileUrl = () => {
+  return `${BASE_URL}/list`;
 };
